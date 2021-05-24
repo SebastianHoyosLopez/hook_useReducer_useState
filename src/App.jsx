@@ -3,45 +3,35 @@ import React, { useReducer, useState } from "react";
 //estado inicial
 const initialState = {
   count: 0,
-  countInterval: 1,
 };
 
 //Reducer
 const reducer = (state, action) => {
   switch (action.type) {
-    case "SET_INTERVAL":
-      return {
-        ...state,
-        countInterval: action.countInterval,
-      };
     case "INCREASE_COUNT":
       return {
         ...state,
-        count: state.count + state.countInterval,
+        count: state.count + action.value,
       };
     case "DECREASE_COUNT":
       return {
         ...state,
-        count: state.count - state.countInterval,
+        count: state.count - action.value,
       };
   }
 };
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [step, setStep] = useState(0);
   const [text, setText] = useState(false);
 
-  const handleCountInterval = (e) => {
-    const { value } = e.target;
-    dispatch({ type: "SET_INTERVAL", countInterval: parseInt(value) });
-  };
-
   const handleCountSum = () => {
-    dispatch({ type: "INCREASE_COUNT" });
+    dispatch({ type: "INCREASE_COUNT", value: step });
   };
 
   const handleCountRes = () => {
-    dispatch({ type: "DECREASE_COUNT" });
+    dispatch({ type: "DECREASE_COUNT", value: step });
   };
 
   return (
@@ -49,8 +39,8 @@ function App() {
       <h1 className="mt-5">Count: {state.count}</h1>
       <div className="my-3">
         <input
-          value={state.countInterval}
-          onChange={handleCountInterval}
+          value={step}
+          onChange={(e) => setStep(Number(e.target.value))}
           type="text"
         />
       </div>
@@ -68,9 +58,13 @@ function App() {
       </div>
       <div className="my-5">
         {text ? (
-          <div>Te has suscrito</div>
+          <div>
+            <strong>TE HAS SUSCRITO</strong>
+          </div>
         ) : (
-          <button className="btn btn-success" onClick={() => setText(true)}>suscribirse</button>
+          <button className="btn btn-success" onClick={() => setText(true)}>
+            suscribirse
+          </button>
         )}
       </div>
     </div>
