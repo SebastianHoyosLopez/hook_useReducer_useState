@@ -24,7 +24,7 @@ const reducer = (state, action) => {
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [step, setStep] = useState(0);
-  const [text, setText] = useState(false);
+  const [subscription, setSubscription] = useState(false);
 
   const handleCountSum = () => {
     dispatch({ type: "INCREASE_COUNT", value: step });
@@ -41,11 +41,11 @@ function App() {
         <input
           value={step}
           onChange={(e) => setStep(Number(e.target.value))}
-          type="text"
+          type="subscription"
         />
       </div>
       <div>
-        <button onClick={handleCountSum} type="text" className="btn btn-danger">
+        <button onClick={handleCountSum} type="subscription" className="btn btn-danger">
           sumar
         </button>
         <button
@@ -57,12 +57,12 @@ function App() {
         </button>
       </div>
       <div className="my-5">
-        {text ? (
+        {subscription ? (
           <div>
             <strong>TE HAS SUSCRITO</strong>
           </div>
         ) : (
-          <button className="btn btn-success" onClick={() => setText(true)}>
+          <button className="btn btn-success" onClick={() => setSubscription(true)}>
             suscribirse
           </button>
         )}
